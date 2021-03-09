@@ -14,7 +14,9 @@
     <name>address-book</name>
     <description>Demo project for Spring Boot</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
+        <neo4j-java-driver-spring-boot-starter.version>4.1.1.1</neo4j-java-driver-spring-boot-starter.version>
+        <io.springfox.version>2.7.0</io.springfox.version>
     </properties>
     <dependencies>
         <dependency>
@@ -38,6 +40,11 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.neo4j.driver</groupId>
+            <artifactId>neo4j-java-driver-spring-boot-starter</artifactId>
+            <version>${neo4j-java-driver-spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -52,6 +59,17 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${io.springfox.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${io.springfox.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -62,7 +80,7 @@
                 <configuration>
                     <excludes>
                         <exclude>
-                            <groupId>org.projectlombok</groupId>
+                            <groupId>org.projectlombok</groupId >
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
