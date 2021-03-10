@@ -35,7 +35,10 @@ public class AddressBookController {
         return ResponseEntity.ok(convertToAddressBookModel(savedEntity));
     }
     @PutMapping("/@{username}")
-    public ResponseEntity<AddressBookModel> updateAddressBook(@RequestBody @Valid AddressBookModel addressBookModel) {
+    public ResponseEntity<AddressBookModel> updateAddressBook(@PathVariable("username") String username, @RequestBody @Valid AddressBookModel addressBookModel) {
+
+        if(!username.equals(addressBookModel.getUsername()))
+            throw new IllegalArgumentException("User in path and body do not match!!");
 
         AddressBook savedEntity = addressBookService.update(convertToAddressBookEntity(addressBookModel));
         return ResponseEntity.ok(convertToAddressBookModel(savedEntity));
@@ -82,6 +85,18 @@ public class AddressBookController {
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public @ResponseBody
     ExceptionResponse handleResourceNotFound(final AlredyExistsException exception,
+                                             final HttpServletRequest request) {
+
+        ExceptionResponse error = new ExceptionResponse();
+        error.setErrorMessage(exception.getMessage());
+
+        return error;
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public @ResponseBody
+    ExceptionResponse handleIllegalArgumentException    (final AlredyExistsException exception,
                                              final HttpServletRequest request) {
 
         ExceptionResponse error = new ExceptionResponse();
